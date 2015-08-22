@@ -63,7 +63,7 @@ class Person {
 	
 	/**
 	 * Global setter
-	 * (no data controll)
+	 * (no data control)
 	 * 
 	 * @param String $key Name of the property
 	 * @param mixed $value Value to set
@@ -92,6 +92,21 @@ class Person {
 	 */
 	public function getErrors(){
 		return $this -> errors;
+	}
+	
+	/**
+	 *  Test mode
+	 */
+	public function toString(){
+		$str = "";
+		
+		foreach($this -> data as $key => $value){
+			if($value != NULL){
+				$str .= "[{$key}] = {$value}\r\n";
+			}
+		}
+		
+		return $str;
 	}
 	
 }
