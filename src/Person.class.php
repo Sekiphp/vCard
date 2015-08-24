@@ -15,6 +15,7 @@ class Person {
 	
 	/**
 	 * Constructor defined all supported values
+	 * Array keys are all supported values
 	 */
 	public function __construct(){
 		$this -> errors = array();	
