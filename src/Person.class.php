@@ -8,7 +8,7 @@ namespace diginex\vCard;
  */
 class Person {
 	/** Contains all data about Person */
-	private $data;
+	public $data;
 	
 	/** All error messages */
 	private $errors;
