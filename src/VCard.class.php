@@ -31,10 +31,8 @@ class VCard {
 	 */
 	public function addPerson(Person $person){
 		if($person -> getErrorsCount() == 0){
-			$this -> data[] = $person -> data;
+			$this -> data[] = $person -> getData();
 		}
-    
-    //print_r($this->data);
 	}
 	
   /**
@@ -79,7 +77,7 @@ class VCard {
 		$txt[] = "BEGIN:VCARD";
 		$txt[] = "VERSION:3.0";
 		$txt[] = "CLASS:PUBLIC";
-		//$txt[] = "PRODID:-//class_vCard from WhatsAPI//NONSGML Version 1//EN";
+		//$txt[] = "PRODID:-//class_vCard from Sekiphp//NONSGML Version 1//EN";
 		$txt[] = "REV:" . $this->revision_date . "";
 		$txt[] = "FN:" . $data['display_name'] . "";
 		$txt[] = "N:"
@@ -168,6 +166,7 @@ class VCard {
 		$txt[] = "TZ:" . $data['timezone'] . "";
 		$txt[] = "END:VCARD";
     
+		
     return imPlode("\r\n", $txt);
   }
 	
