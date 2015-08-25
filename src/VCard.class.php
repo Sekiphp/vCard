@@ -154,13 +154,21 @@ class VCard {
 			$txt[] = "URL;type=WORK:" . $data['url'] . "";
 		}
 		if ($data['birthday']) {
-			$txt[] = "BDAY:" . $data['birthday'] . "";
+			$txt[] = "BDAY:" . date('Y-m-d', strToTime($data['birthday'])) . "";
 		}
 		if ($data['role']) {
 			$txt[] = "ROLE:" . $data['role'] . "";
 		}
 		if ($data['note']) {
 			$txt[] = "NOTE:" . $data['note'] . "";
+		}
+		if ($data['photo']) {
+			$file = file_get_contents($data['photo']);
+			
+			if($file){
+				$ext = pathinfo($data['photo'], PATHINFO_EXTENSION);
+				$txt[] = "PHOTO;TYPE={$ext};ENCODING=B:" . base64_encode($file) . "";	
+			}
 		}
     
 		$txt[] = "TZ:" . $data['timezone'] . "";

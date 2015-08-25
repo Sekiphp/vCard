@@ -45,7 +45,7 @@
 	$person -> set("last_name", "McKay"); 
 	$person -> set('name_prefix', "PREF");
 	$person -> set('name_suffix', "SUFF");
-	$person -> set('nickname', "traktor");
+	$person -> set('nickname', "NICK");
 	$person -> set('title', "PhD");
 	$person -> set('role', "Scientist");
 	$person -> set('department', "SGA");
@@ -68,12 +68,11 @@
 	$person -> set('home_tel', "111 222 000");
 	$person -> set('cell_tel', "999 999 999"); // mobile
 	$person -> set('email1', "hub@hub.com");
-	$person -> set('email2', "mail@gmail.com");
 	$person -> set('url', "www.diginex.cz");
-	$person -> set('photo', "");
+	$person -> set('photo', "https://upload.wikimedia.org/wikipedia/commons/5/54/David-hewlett-vancouver-300.png");
 	$person -> set('birthday', "1.1.1970");
 	$person -> set('timezone', "2");
-	$person -> set('note', "Fll example");			
+	$person -> set('note', "Full example");			
 	# add person to vCard queue
 	$vCard -> addPerson($person);
 	
