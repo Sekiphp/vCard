@@ -77,12 +77,14 @@ class Person {
 			return TRUE;
 		} 
 		
-		$this -> errors[] = "vCard Error (class Person): error for key: {$key}";
+		$this -> errors[] = "vCard Error for key: {$key}";
 		return FALSE;
 	}	
 	
 	/**
 	 * Get errors count (0 = no errors)
+	 *
+	 * @return int Count
 	 */
 	public function getErrorsCount(){
 		return sizeOf($this -> errors);
@@ -108,6 +110,13 @@ class Person {
 		}
 		
 		return $str;
+	}
+	
+	/**
+	 * @return array Personal data
+	 */
+	public function getData(){
+		return $this -> data;
 	}
 	
 }
