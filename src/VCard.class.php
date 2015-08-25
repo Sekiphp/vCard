@@ -12,7 +12,7 @@ class VCard {
 	/** Array contains all data */
 	private $data;	
 	/** String to be outputted to vcf file */
-	public $output;
+	private $output;
 	/** DateTime of generating file */
 	private $revision_date;
 	
@@ -31,21 +31,14 @@ class VCard {
 	 */
 	public function addPerson(Person $person){
 		if($person -> getErrorsCount() == 0){
-			$this -> data[] = $person -> getData();
+			$this -> data = $person;
 		}
 	}
 	
-  /**
-   * Read data and generating output
-   */
-	public function buildAll(){
-    $arr = array();
-    
+	private function buildAll(){
 		foreach($this->data as $person){
-			$arr[] = $this -> buildOne($person);	
-		}	
-    
-    $this -> output = imPlode("\r\n", $arr);
+			$this -> output .= $this -> buildOne($person -> data) . "\r\n";	
+		}		
 	}
 	
 	/**
@@ -77,7 +70,7 @@ class VCard {
 		$txt[] = "BEGIN:VCARD";
 		$txt[] = "VERSION:3.0";
 		$txt[] = "CLASS:PUBLIC";
-		//$txt[] = "PRODID:-//class_vCard from Sekiphp//NONSGML Version 1//EN";
+		//$txt[] = "PRODID:-//class_vCard from WhatsAPI//NONSGML Version 1//EN";
 		$txt[] = "REV:" . $this->revision_date . "";
 		$txt[] = "FN:" . $data['display_name'] . "";
 		$txt[] = "N:"
@@ -100,75 +93,68 @@ class VCard {
 				. $data['department'] . "";
 		}
 
-    # work address
 		if ($data['work_po_box'] || $data['work_extended_address']
 				|| $data['work_address'] || $data['work_city']
 				|| $data['work_state'] || $data['work_postal_code']
 				|| $data['work_country']) {
-						$txt[] = "ADR;type=WORK:"
+						$$txt[] = "ADR;type=WORK:"
 								. $data['work_po_box'] . ";"
 								. $data['work_extended_address'] . ";"
 								. $data['work_address'] . ";"
 								. $data['work_city'] . ";"
 								. $data['work_state'] . ";"
 								. $data['work_postal_code'] . ";"
-								. $data['work_country'] . "";
+								. $data['work_country'] . "\r\n";
 		}
-    
-    # home address
 		if ($data['home_po_box'] || $data['home_extended_address']
 				|| $data['home_address'] || $data['home_city']
 				|| $data['home_state'] || $data['home_postal_code']
 				|| $data['home_country']) {
-						$txt[] = "ADR;type=HOME:"
+						$$txt[] = "ADR;type=HOME:"
 								. $data['home_po_box'] . ";"
 								. $data['home_extended_address'] . ";"
 								. $data['home_address'] . ";"
 								. $data['home_city'] . ";"
 								. $data['home_state'] . ";"
 								. $data['home_postal_code'] . ";"
-								. $data['home_country'] . "";
+								. $data['home_country'] . "\r\n";
 		}
 		if ($data['email1']) {
-			$txt[] = "EMAIL;type=INTERNET,pref:" . $data['email1'] . "";
+				$$txt[] = "EMAIL;type=INTERNET,pref:" . $data['email1'] . "\r\n";
 		}
 		if ($data['email2']) {
-			$txt[] = "EMAIL;type=INTERNET:" . $data['email2'] . "";
+				$$txt[] = "EMAIL;type=INTERNET:" . $data['email2'] . "\r\n";
 		}
 		if ($data['office_tel']) {
-			$txt[] = "TEL;type=WORK,voice:" . $data['office_tel'] . "";
+				$$txt[] = "TEL;type=WORK,voice:" . $data['office_tel'] . "\r\n";
 		}
 		if ($data['home_tel']) {
-			$txt[] = "TEL;type=HOME,voice:" . $data['home_tel'] . "";
+				$$txt[] = "TEL;type=HOME,voice:" . $data['home_tel'] . "\r\n";
 		}
 		if ($data['cell_tel']) {
-			$txt[] = "TEL;type=CELL,voice:" . $data['cell_tel'] . "";
+				$$txt[] = "TEL;type=CELL,voice:" . $data['cell_tel'] . "\r\n";
 		}
 		if ($data['fax_tel']) {
-			$txt[] = "TEL;type=WORK,fax:" . $data['fax_tel'] . "";
+				$$txt[] = "TEL;type=WORK,fax:" . $data['fax_tel'] . "\r\n";
 		}
 		if ($data['pager_tel']) {
-			$txt[] = "TEL;type=WORK,pager:" . $data['pager_tel'] . "";
+				$$txt[] = "TEL;type=WORK,pager:" . $data['pager_tel'] . "\r\n";
 		}
 		if ($data['url']) {
-			$txt[] = "URL;type=WORK:" . $data['url'] . "";
+				$$txt[] = "URL;type=WORK:" . $data['url'] . "\r\n";
 		}
 		if ($data['birthday']) {
-			$txt[] = "BDAY:" . $data['birthday'] . "";
+				$$txt[] = "BDAY:" . $data['birthday'] . "\r\n";
 		}
 		if ($data['role']) {
-			$txt[] = "ROLE:" . $data['role'] . "";
+				$$txt[] = "ROLE:" . $data['role'] . "\r\n";
 		}
 		if ($data['note']) {
-			$txt[] = "NOTE:" . $data['note'] . "";
+				$$txt[] = "NOTE:" . $data['note'] . "\r\n";
 		}
-    
-		$txt[] = "TZ:" . $data['timezone'] . "";
-		$txt[] = "END:VCARD";
-    
-		
-    return imPlode("\r\n", $txt);
-  }
+		$$txt[] = "TZ:" . $data['timezone'] . "\r\n";
+		$$txt[] = "END:VCARD\r\n";
+    }
 	
 	// TODO: save vcf file on server
 	public function saveVcfAsFile(){
@@ -184,7 +170,7 @@ class VCard {
 		}
 		
 		header("Content-type: text/directory");
-		header("Content-Disposition: attachment; filename=" . $this->fileName . ".vcf");
+		header("Content-Disposition: attachment; filename=" . $this->filename . ".vcf");
 		header("Pragma: public");
 		echo $this -> output;
 		exit();
